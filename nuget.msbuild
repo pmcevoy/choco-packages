@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0"
+	DefaultTargets="Build">
+	<PropertyGroup>
+		<OutDir Condition=" '$(OutDir)' == '' ">bin\</OutDir>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Nuspec Include="server-jre8\*.nuspec" />
+	</ItemGroup>
+
+	<Target Name="Build" >
+		<Exec Command="nuget pack %(Nuspec.Identity) -OutputDirectory $(OutDir)" />
+	</Target>
+
+	<Target Name="Publish">
+		<ItemGroup>
+			<NuPkg Include="$(OutDir)\*.nupkg" />
+		</ItemGroup>
+		<Exec Command="nuget push %(NuPkg.Identity) -ApiKey e8c34032-c116-437d-83a9-9874dd461890 -Source https://www.myget.org/F/ezetopdevchocolatey/api/v2/package -NonInteractive -Verbosity detailed" />
+	</Target>
+</Project>

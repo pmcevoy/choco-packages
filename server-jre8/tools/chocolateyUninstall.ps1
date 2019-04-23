@@ -3,10 +3,10 @@
 $versionArray = $env:chocolateyPackageVersion.Split(".")
 $folderVersion = "jdk1.$($versionArray[0]).$($versionArray[1])_$($versionArray[2])"
 # This will need updated to handle install options file eventually
-$InstallationPath = Join-Path (Get-ToolsLocation) "Java/server-jre"
+$InstallationPath = Join-Path (Get-ToolsLocation) "Java/server-jre/$folderVersion"
 $EnvVariableType = "Machine"
 
-if ([System.IO.Directory]::Exists($InstallationPath)) {
+if (Test-Path $InstallationPath) {
     Write-Debug "Uninstalling $packageName from $InstallationPath"
 
     $JavaHome = Get-EnvironmentVariable "JAVA_HOME" $EnvVariableType
